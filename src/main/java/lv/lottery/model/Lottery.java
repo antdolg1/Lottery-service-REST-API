@@ -4,11 +4,8 @@ package lv.lottery.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import lv.lottery.config.Status;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,7 +28,7 @@ public class Lottery implements Serializable {
     private Integer winnerCode;
 
     @Column(name = "status")
-    private Status status;
+    private String status;
 
     @Column(name = "title")
     private String title;
@@ -75,11 +72,11 @@ public class Lottery implements Serializable {
         this.winnerCode = winnerCode;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -115,7 +112,7 @@ public class Lottery implements Serializable {
         this.participants = participants;
     }
 
-    public Lottery(Integer limit, Integer winnerCode, Status status, String title, LocalDateTime startDate, LocalDateTime endDate, List<Participant> participants) {
+    public Lottery(Integer limit, Integer winnerCode, String status, String title, LocalDateTime startDate, LocalDateTime endDate, List<Participant> participants) {
         this.limit = limit;
         this.winnerCode = winnerCode;
         this.status = status;

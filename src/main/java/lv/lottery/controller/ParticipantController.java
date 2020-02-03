@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.apache.commons.validator.routines.EmailValidator;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -28,12 +29,12 @@ public class ParticipantController {
 
     @PostMapping("/register")
     ResponseDTO register(@Valid @RequestBody ParticipantRegistrationDTO dto) {
-
-//        if (dto.getAge() < 21){
-//            return new Response("Fail", "Sorry, choosen by you lottery is full");
-//            //to do validation
-//        }
-
+        if (dto.getAge() < 21) {
+            return new ResponseDTO(Status.RESPONSE_FAIL, "Participation allowed only from 21 years");
+        }
+        if (EmailValidator.getInstance().isValid(dto.getEmail()) == false) {
+            return new ResponseDTO(Status.RESPONSE_FAIL, "Please enter valid email");
+        }
         Participant participant = new Participant();
         participant.setLotteryId(dto.getId());
         participant.setEmail(dto.getEmail());
@@ -41,12 +42,13 @@ public class ParticipantController {
         participant.setUniqueCode(dto.getCode());
         try {
             participantRepository.save(participant);
-            return new ResponseDTO(Status.OK);
+            return new ResponseDTO(Status.RESPONSE_OK);
         } catch (Exception e) {
-            return new ResponseDTO(Status.FAIL, e.getMessage());
+            return new ResponseDTO(Status.RESPONSE_FAIL, e.getMessage());
 
         }
 
 
     }
 }
+

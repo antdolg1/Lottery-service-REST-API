@@ -20,7 +20,7 @@ public class Participant implements Serializable {
     private String email;
 
     @Column(name = "age")
-    private int age;
+    private Byte age;
 
     @Column(name = "unique_code")
     private String uniqueCode;
@@ -46,11 +46,11 @@ public class Participant implements Serializable {
         this.email = email;
     }
 
-    public int getAge() {
+    public Byte getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Byte age) {
         this.age = age;
     }
 
@@ -78,7 +78,7 @@ public class Participant implements Serializable {
         lottery.setId(id);
     }
 
-    public Participant(String email, int age, String uniqueCode, Lottery lottery) {
+    public Participant(String email, Byte age, String uniqueCode, Lottery lottery) {
         this.email = email;
         this.age = age;
         this.uniqueCode = uniqueCode;

@@ -5,29 +5,29 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseDTO {
 
-        private Enum status;
+        private String status;
         private Long id;
         private String winnerCode;
         private String reason;
 
-        public ResponseDTO(Enum status, Long id) {
+        public ResponseDTO(String status, Long id) {
             this.status = status;
             this.id = id;
         }
 
-        public ResponseDTO(Enum status) {
+        public ResponseDTO(String status) {
             this.status = status;
         }
 
         public ResponseDTO() {
         }
 
-        public ResponseDTO(Enum status, String reason) {
+        public ResponseDTO(String status, String reason) {
             this.status = status;
             this.reason = reason;
         }
 
-        public ResponseDTO(Enum status, Long id, String winnerCode) {
+        public ResponseDTO(String status, Long id, String winnerCode) {
             this.status = status;
             this.id = id;
             this.winnerCode = winnerCode;
@@ -41,11 +41,11 @@ public class ResponseDTO {
             this.winnerCode = winnerCode;
         }
 
-        public Enum getStatus() {
+        public String getStatus() {
             return status;
         }
 
-        public void setStatus(Enum status) {
+        public void setStatus(String status) {
             this.status = status;
         }
 
