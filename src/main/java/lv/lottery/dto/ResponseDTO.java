@@ -6,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class ResponseDTO {
 
         private String status;
-        private Long id;
+        private Integer id;
         private String winnerCode;
         private String reason;
 
-        public ResponseDTO(String status, Long id) {
+        public ResponseDTO(String status, Integer id) {
             this.status = status;
             this.id = id;
         }
@@ -27,7 +27,7 @@ public class ResponseDTO {
             this.reason = reason;
         }
 
-        public ResponseDTO(String status, Long id, String winnerCode) {
+        public ResponseDTO(String status, Integer id, String winnerCode) {
             this.status = status;
             this.id = id;
             this.winnerCode = winnerCode;
@@ -49,11 +49,11 @@ public class ResponseDTO {
             this.status = status;
         }
 
-        public Long getId() {
+        public Integer getId() {
             return id;
         }
 
-        public void setId(Long id) {
+        public void setId(Integer id) {
             this.id = id;
         }
 

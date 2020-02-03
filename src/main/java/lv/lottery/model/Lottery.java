@@ -19,7 +19,7 @@ public class Lottery implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", insertable = false, updatable = false)
-    private Long id;
+    private Integer id;
 
     @Column(name = "participants_lim")
     private Integer limit;
@@ -48,11 +48,11 @@ public class Lottery implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "lottery")
     private List<Participant> participants;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

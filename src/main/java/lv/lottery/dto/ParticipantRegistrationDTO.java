@@ -1,23 +1,23 @@
 package lv.lottery.dto;
 
 public class ParticipantRegistrationDTO {
-    private Long id;
+    private Integer id;
     private String email;
     private Byte age;
     private String code;
 
-    public ParticipantRegistrationDTO(Long id, String email, Byte age, String code) {
+    public ParticipantRegistrationDTO(Integer id, String email, Byte age, String code) {
         this.id = id;
         this.email = email;
         this.age = age;
         this.code = code;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

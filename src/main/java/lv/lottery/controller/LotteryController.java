@@ -8,14 +8,14 @@ import lv.lottery.dto.StopRegistrationDTO;
 import lv.lottery.model.Lottery;
 import lv.lottery.repository.LotteryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
+import static lv.lottery.config.Status.LOTTERY_CLOSED;
 
 @RestController
 public class LotteryController {
@@ -48,15 +48,16 @@ public class LotteryController {
     }
 
     @PostMapping("/stop-registration")
-    ResponseDTO stopLottery(@Valid @RequestBody StopRegistrationDTO stopDto) {
-        Lottery lottery = new Lottery();
-        lottery.setId(stopDto.getId());
-        lottery.setEndDate(LocalDateTime.now());
+    ResponseDTO stopLottery(@Valid @RequestBody StopRegistrationDTO dto) throws Exception {
+        Optional<Lottery> lottery = lotteryRepository.findById(dto.getId());
+        Lottery lotteryToModify = lottery.get();
+        lotteryToModify.setStatus(LOTTERY_CLOSED);
+        lotteryToModify.setEndDate(LocalDateTime.now());
         try {
-            lotteryRepository.save(lottery);
-            return new ResponseDTO(Status.RESPONSE_OK, lottery.getId());
+            lotteryRepository.save(lotteryToModify);
+            return new ResponseDTO(Status.RESPONSE_OK, dto.getId());
         } catch (Exception e) {
-            return new ResponseDTO(Status.RESPONSE_FAIL, "No lottery with such an ID" + stopDto.getId());
+            return new ResponseDTO(Status.RESPONSE_FAIL, "No lottery with such an ID" + dto.getId());
         }
 
     }

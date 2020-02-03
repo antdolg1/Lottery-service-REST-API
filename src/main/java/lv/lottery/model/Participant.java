@@ -70,14 +70,6 @@ public class Participant implements Serializable {
         this.lottery = lottery;
     }
 
-    public Long getLotteryId(){
-        return lottery.getId();
-    }
-
-    public void setLotteryId(Long id){
-        lottery.setId(id);
-    }
-
     public Participant(String email, Byte age, String uniqueCode, Lottery lottery) {
         this.email = email;
         this.age = age;
