@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class UniqueCodeValidator {
-    private static String uniqueCode = "0302200812345652";
+    private static String uniqueCode = "0402200812345662";
     private static String email = "1@gl.com";
 
 
@@ -30,6 +30,13 @@ public class UniqueCodeValidator {
         } else {
             System.out.println("Unique code not valid");
         }
+
+        if (!(uniqueCode.substring(8)).chars().allMatch(Character::isDigit)) {
+            System.out.println("Last 8 values should be numbers");
+        } else {
+            System.out.println("Number 9-16 verified");
+        }
+
     }
 
 }

@@ -42,8 +42,8 @@
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
+			<groupId>joda-time</groupId>
 			<version>2.10.5</version>
 		</dependency>
 

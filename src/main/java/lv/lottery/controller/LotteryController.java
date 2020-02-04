@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static lv.lottery.config.Status.LOTTERY_CLOSED;
@@ -47,8 +48,8 @@ public class LotteryController {
         }
     }
 
-    @PostMapping("/stop-registration")
-    ResponseDTO stopLottery(@Valid @RequestBody StopRegistrationDTO dto) throws Exception {
+    @PutMapping("/stop-registration")
+    ResponseDTO stopLottery(@Valid @RequestBody StopRegistrationDTO dto) {
         Optional<Lottery> lottery = lotteryRepository.findById(dto.getId());
         Lottery lotteryToModify = lottery.get();
         lotteryToModify.setStatus(LOTTERY_CLOSED);
@@ -56,8 +57,8 @@ public class LotteryController {
         try {
             lotteryRepository.save(lotteryToModify);
             return new ResponseDTO(Status.RESPONSE_OK, dto.getId());
-        } catch (Exception e) {
-            return new ResponseDTO(Status.RESPONSE_FAIL, "No lottery with such an ID" + dto.getId());
+        } catch (NoSuchElementException e) {
+            return new ResponseDTO(Status.RESPONSE_FAIL, e.getMessage());
         }
 
     }

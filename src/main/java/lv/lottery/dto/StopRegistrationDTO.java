@@ -14,4 +14,7 @@ public class StopRegistrationDTO {
     public StopRegistrationDTO(Integer id) {
         this.id = id;
     }
+
+    public StopRegistrationDTO() {
+    }
 }
