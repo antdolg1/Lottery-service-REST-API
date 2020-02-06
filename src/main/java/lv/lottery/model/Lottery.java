@@ -1,15 +1,8 @@
 package lv.lottery.model;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -17,15 +10,18 @@ import java.util.List;
 public class Lottery implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", insertable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "participants_lim")
+    @Column(name = "participants_limit")
     private Integer limit;
 
     @Column(name = "winner_code")
-    private Integer winnerCode;
+    private String winnerCode;
+
+    @Column(name = "winner_email")
+    private String winnerEmail;
 
     @Column(name = "status")
     private String status;
@@ -34,16 +30,10 @@ public class Lottery implements Serializable {
     private String title;
 
     @Column(name = "start_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss")
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime startDate;
+    private String startDate;
 
     @Column(name = "end_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss")
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime endDate;
+    private String endDate;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "lottery")
     private List<Participant> participants;
@@ -64,12 +54,21 @@ public class Lottery implements Serializable {
         this.limit = limit;
     }
 
-    public Integer getWinnerCode() {
+
+    public String getWinnerCode() {
         return winnerCode;
     }
 
-    public void setWinnerCode(Integer winnerCode) {
+    public void setWinnerCode(String winnerCode) {
         this.winnerCode = winnerCode;
+    }
+
+    public String getWinnerEmail() {
+        return winnerEmail;
+    }
+
+    public void setWinnerEmail(String winnerEmail) {
+        this.winnerEmail = winnerEmail;
     }
 
     public String getStatus() {
@@ -88,19 +87,19 @@ public class Lottery implements Serializable {
         this.title = title;
     }
 
-    public LocalDateTime getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
@@ -112,14 +111,14 @@ public class Lottery implements Serializable {
         this.participants = participants;
     }
 
-    public Lottery(Integer limit, Integer winnerCode, String status, String title, LocalDateTime startDate, LocalDateTime endDate, List<Participant> participants) {
+    public Lottery(Integer limit, String winnerCode, String winnerEmail, String status, String title, String startDate, String endDate) {
         this.limit = limit;
         this.winnerCode = winnerCode;
+        this.winnerEmail = winnerEmail;
         this.status = status;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.participants = participants;
     }
 
     public Lottery() {

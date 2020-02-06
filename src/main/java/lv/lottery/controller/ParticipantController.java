@@ -41,6 +41,7 @@ public class ParticipantController {
         if (!EmailValidator.getInstance().isValid(dto.getEmail())) {
             return new ResponseDTO(Status.RESPONSE_FAIL, "Please enter valid email");
         }
+
         Participant participant = new Participant();
         Optional<Lottery> lottery = lotteryRepository.findById(dto.getId());
         if (!lottery.isPresent()) {
@@ -55,10 +56,6 @@ public class ParticipantController {
             return new ResponseDTO(Status.RESPONSE_OK);
         } catch (Exception e) {
             return new ResponseDTO(Status.RESPONSE_FAIL, e.getMessage());
-
         }
-
-
     }
 }
-

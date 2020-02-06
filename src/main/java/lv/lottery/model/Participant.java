@@ -11,10 +11,9 @@ import java.io.Serializable;
 public class Participant implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", insertable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id")
     private Integer id;
-
 
     @Column(name = "email")
     private String email;

@@ -86,6 +86,7 @@ public class LotteryController {
     @PostMapping("/choose-winner")
     ChooseWinnerResponseDTO chooseWinner(@Valid @RequestBody ChooseWinnerDTO dto) {
         String winner =  participantRepository.selectWinner(dto.getId()).get();
+        logger.info("Winner is successfully selected.");
         return new ChooseWinnerResponseDTO(Status.RESPONSE_OK, winner);
     }
 }
