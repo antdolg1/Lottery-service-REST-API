@@ -1,6 +1,5 @@
 package lv.lottery.model;
 
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -17,12 +16,6 @@ public class Lottery implements Serializable {
     @Column(name = "participants_limit")
     private Integer limit;
 
-    @Column(name = "winner_code")
-    private String winnerCode;
-
-    @Column(name = "winner_email")
-    private String winnerEmail;
-
     @Column(name = "status")
     private String status;
 
@@ -35,8 +28,24 @@ public class Lottery implements Serializable {
     @Column(name = "end_date")
     private String endDate;
 
+    @Column(name = "winner_id")
+    private Integer winnerId;
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "lottery")
     private List<Participant> participants;
+
+    public Lottery(Integer limit, String status, String title, String startDate, String endDate, Integer winnerId, List<Participant> participants) {
+        this.limit = limit;
+        this.status = status;
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.winnerId = winnerId;
+        this.participants = participants;
+    }
+
+    public Lottery() {
+    }
 
     public Integer getId() {
         return id;
@@ -52,23 +61,6 @@ public class Lottery implements Serializable {
 
     public void setLimit(Integer limit) {
         this.limit = limit;
-    }
-
-
-    public String getWinnerCode() {
-        return winnerCode;
-    }
-
-    public void setWinnerCode(String winnerCode) {
-        this.winnerCode = winnerCode;
-    }
-
-    public String getWinnerEmail() {
-        return winnerEmail;
-    }
-
-    public void setWinnerEmail(String winnerEmail) {
-        this.winnerEmail = winnerEmail;
     }
 
     public String getStatus() {
@@ -103,24 +95,19 @@ public class Lottery implements Serializable {
         this.endDate = endDate;
     }
 
+    public Integer getWinnerId() {
+        return winnerId;
+    }
+
+    public void setWinnerId(Integer winnerId) {
+        this.winnerId = winnerId;
+    }
+
     public List<Participant> getParticipants() {
         return participants;
     }
 
     public void setParticipants(List<Participant> participants) {
         this.participants = participants;
-    }
-
-    public Lottery(Integer limit, String winnerCode, String winnerEmail, String status, String title, String startDate, String endDate) {
-        this.limit = limit;
-        this.winnerCode = winnerCode;
-        this.winnerEmail = winnerEmail;
-        this.status = status;
-        this.title = title;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
-
-    public Lottery() {
     }
 }
