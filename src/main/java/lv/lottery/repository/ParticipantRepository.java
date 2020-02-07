@@ -8,11 +8,13 @@ import java.util.Optional;
 
 public interface ParticipantRepository extends JpaRepository<Participant, Integer> {
 
-    @Query(nativeQuery = true, value = "SELECT p.unique_code \n" +
+    @Query(nativeQuery = true, value = "SELECT p.id \n" +
                                         "FROM Participants p \n" +
                                         "WHERE p.lottery_id=:id \n" +
                                         "ORDER BY RANDOM() LIMIT 1")
-    Optional<String> selectWinner(Integer id);
+    Integer selectWinnerId(Integer id);
+
+    Optional<Participant> findByUniqueCode(String uniqueCode);
 
 }
 
