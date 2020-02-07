@@ -4,6 +4,7 @@ package lv.lottery.controller;
 import lv.lottery.config.Status;
 import lv.lottery.dto.*;
 import lv.lottery.model.Lottery;
+import lv.lottery.model.Participant;
 import lv.lottery.repository.LotteryRepository;
 import lv.lottery.repository.ParticipantRepository;
 import org.slf4j.Logger;
@@ -69,11 +70,6 @@ public class LotteryController {
         Lottery lotteryToModify = lottery.get();
         lotteryToModify.setStatus(LOTTERY_CLOSED);
         logger.info("Lottery status successfully changed to CLOSED.");
-        String pattern = "dd.MM.yyyy HH:mm";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String endDate = simpleDateFormat.format(new Date());
-        lotteryToModify.setEndDate(endDate);
-        logger.info("Lottery end date successfully set.");
         try {
             lotteryRepository.save(lotteryToModify);
             logger.info("Lottery successfully updated.");
@@ -85,8 +81,41 @@ public class LotteryController {
 
     @PostMapping("/choose-winner")
     ChooseWinnerResponseDTO chooseWinner(@Valid @RequestBody ChooseWinnerDTO dto) {
-        String winner =  participantRepository.selectWinner(dto.getId()).get();
-        logger.info("Winner is successfully selected.");
-        return new ChooseWinnerResponseDTO(Status.RESPONSE_OK, winner);
+        Integer winnerId = participantRepository.selectWinnerId(dto.getId());
+        logger.info("Winner successfully selected.");
+        Optional<Lottery> lottery = lotteryRepository.findById(dto.getId());
+        Lottery lotteryToModify = lottery.get();
+        lotteryToModify.setWinnerId(winnerId);
+        String pattern = "dd.MM.yyyy HH:mm";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String endDate = simpleDateFormat.format(new Date());
+        lotteryToModify.setEndDate(endDate);
+        logger.info("Lottery End date successfully set");
+        lotteryRepository.save(lotteryToModify);
+        logger.info("Lottery winner id successfully added.");
+        Optional<Participant> participant = participantRepository.findById(winnerId);
+        Participant participant1 = participant.get();
+        String winnerCode = participant1.getUniqueCode();
+        return new ChooseWinnerResponseDTO(Status.RESPONSE_OK, winnerCode);
+    }
+
+    @GetMapping("/status")
+    public ResponseDTO getParticipantByUniqueCode(@RequestParam Integer id,
+                                                  @RequestParam String email,
+                                                  @RequestParam String code) {
+        Optional<Lottery> lottery = lotteryRepository.findById(id);
+        Lottery lottery1 = lottery.get();
+
+        Optional<Participant> participant = participantRepository.findByUniqueCode(code);
+        Participant participant1 = participant.get();
+
+        if (lottery1.getWinnerId() == null) {
+            return new ResponseDTO(Status.STATUS_PENDING);
+        }
+        if (lottery1.getWinnerId().equals(participant1.getId()) && participant1.getEmail().equals(email)) {
+            return new ResponseDTO(Status.STATUS_WIN);
+        } else {
+            return new ResponseDTO(Status.STATUS_LOSE);
+        }
     }
 }

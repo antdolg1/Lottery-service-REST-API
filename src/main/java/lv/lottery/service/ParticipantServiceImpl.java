@@ -1,15 +1,24 @@
 package lv.lottery.service;
 
+import lv.lottery.model.Participant;
 import lv.lottery.repository.ParticipantRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class ParticipantServiceImpl {
 
+    @Autowired
     private ParticipantRepository participantRepository;
 
-    Optional<String> selectWinner(Integer id) {
-        return participantRepository.selectWinner(id);
+    Integer selectWinnerId(Integer id) {
+        return participantRepository.selectWinnerId(id);
+    }
+
+    Optional<Participant> findByUniqueCode(String uniqueCode) {
+        return participantRepository.findByUniqueCode(uniqueCode);
     }
 
 }
