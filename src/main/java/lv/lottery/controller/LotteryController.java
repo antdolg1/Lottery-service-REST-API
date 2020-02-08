@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 import static lv.lottery.config.Status.LOTTERY_CLOSED;
 
@@ -85,6 +82,10 @@ public class LotteryController {
         logger.info("Winner successfully selected.");
         Optional<Lottery> lottery = lotteryRepository.findById(dto.getId());
         Lottery lotteryToModify = lottery.get();
+
+        Optional<Participant> participant = participantRepository.findById(winnerId);
+        Participant participantToModify = participant.get();
+
         lotteryToModify.setWinnerId(winnerId);
         String pattern = "dd.MM.yyyy HH:mm";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -93,9 +94,7 @@ public class LotteryController {
         logger.info("Lottery End date successfully set");
         lotteryRepository.save(lotteryToModify);
         logger.info("Lottery winner id successfully added.");
-        Optional<Participant> participant = participantRepository.findById(winnerId);
-        Participant participant1 = participant.get();
-        String winnerCode = participant1.getUniqueCode();
+        String winnerCode = participantToModify.getUniqueCode();
         return new ChooseWinnerResponseDTO(Status.RESPONSE_OK, winnerCode);
     }
 
@@ -117,5 +116,24 @@ public class LotteryController {
         } else {
             return new ResponseDTO(Status.STATUS_LOSE);
         }
+    }
+
+    @GetMapping("/stats")
+    public HashMap<Integer, ResponseDTO> getStatistics() {
+        List<Lottery> listOfAllLotteries = lotteryRepository.findAll();
+
+        HashMap<Integer, ResponseDTO> listOfAllLotteriesStats = new HashMap<>();
+        Integer i = 0;
+        for (Lottery lottery : listOfAllLotteries) {
+            i++;
+            ResponseDTO lotteryStats = new ResponseDTO();
+            lotteryStats.setId(lottery.getId());
+            lotteryStats.setTitle(lottery.getTitle());
+            lotteryStats.setStartDate(lottery.getStartDate());
+            lotteryStats.setEndDate(lottery.getEndDate());
+            lotteryStats.setParticipants(lottery.getParticipants().size());
+            listOfAllLotteriesStats.put(i, lotteryStats);
+        }
+        return listOfAllLotteriesStats;
     }
 }
