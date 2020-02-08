@@ -5,6 +5,7 @@ import lv.lottery.repository.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +20,10 @@ public class ParticipantServiceImpl {
 
     Optional<Participant> findByUniqueCode(String uniqueCode) {
         return participantRepository.findByUniqueCode(uniqueCode);
+    }
+
+    List<String> getUniqueCodes(){
+        return participantRepository.getUniqueCodes();
     }
 
 }

@@ -4,6 +4,7 @@ import lv.lottery.model.Participant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ParticipantRepository extends JpaRepository<Participant, Integer> {
@@ -15,6 +16,10 @@ public interface ParticipantRepository extends JpaRepository<Participant, Intege
     Integer selectWinnerId(Integer id);
 
     Optional<Participant> findByUniqueCode(String uniqueCode);
+
+
+    @Query(nativeQuery = true, value = "SELECT DISTINCT ON (unique_code)  unique_code FROM participants")
+    List<String> getUniqueCodes();
 
 }
 

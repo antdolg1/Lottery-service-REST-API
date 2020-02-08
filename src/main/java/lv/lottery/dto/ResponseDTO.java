@@ -2,6 +2,8 @@ package lv.lottery.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.HashMap;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseDTO {
 
@@ -29,6 +31,12 @@ public class ResponseDTO {
     public ResponseDTO(String status, String reason) {
         this.status = status;
         this.reason = reason;
+    }
+
+    public ResponseDTO(String status, Integer id, String winnerCode) {
+        this.status = status;
+        this.id = id;
+        this.winnerCode = winnerCode;
     }
 
     public ResponseDTO(Integer id, String title, String startDate, String endDate, Integer participants) {

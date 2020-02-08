@@ -7,14 +7,13 @@ import lv.lottery.model.Lottery;
 import lv.lottery.model.Participant;
 import lv.lottery.repository.LotteryRepository;
 import lv.lottery.repository.ParticipantRepository;
+import lv.lottery.validation.Validations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.apache.commons.validator.routines.EmailValidator;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,35 +26,15 @@ public class ParticipantController {
     @Autowired
     private LotteryRepository lotteryRepository;
 
-    @GetMapping("/participants")
-    public List<Participant> getParticipants() {
-        List<Participant> participants = participantRepository.findAll();
-        return participants;
-    }
+    @Autowired
+    private ParticipantControllerService participantControllerService;
+
+    @Autowired
+    private Validations validations;
 
     @PostMapping("/register")
-    ResponseDTO register(@Valid @RequestBody ParticipantRegistrationDTO dto) {
-        if (dto.getAge() < 21) {
-            return new ResponseDTO(Status.RESPONSE_FAIL, "Participation allowed only from 21 years");
-        }
-        if (!EmailValidator.getInstance().isValid(dto.getEmail())) {
-            return new ResponseDTO(Status.RESPONSE_FAIL, "Please enter valid email");
-        }
-
-        Participant participant = new Participant();
-        Optional<Lottery> lottery = lotteryRepository.findById(dto.getId());
-        if (!lottery.isPresent()) {
-            return new ResponseDTO(Status.RESPONSE_FAIL, "Lottery with such an id doesn't exist");
-        }
-        participant.setLottery(lottery.get());
-        participant.setEmail(dto.getEmail());
-        participant.setAge(dto.getAge());
-        participant.setUniqueCode(dto.getCode());
-        try {
-            participantRepository.save(participant);
-            return new ResponseDTO(Status.RESPONSE_OK);
-        } catch (Exception e) {
-            return new ResponseDTO(Status.RESPONSE_FAIL, e.getMessage());
-        }
+    ResponseDTO register (@RequestBody ParticipantRegistrationDTO dto) {
+        return participantControllerService.createParticipant(dto);
     }
+
 }
