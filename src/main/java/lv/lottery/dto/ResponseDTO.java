@@ -2,8 +2,6 @@ package lv.lottery.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.HashMap;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseDTO {
 

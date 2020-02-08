@@ -6,6 +6,7 @@ import lv.lottery.dto.LotteryRegistrationDTO;
 import lv.lottery.dto.ParticipantRegistrationDTO;
 import lv.lottery.dto.ResponseDTO;
 import lv.lottery.model.Lottery;
+import lv.lottery.model.Participant;
 import lv.lottery.repository.LotteryRepository;
 import lv.lottery.repository.ParticipantRepository;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -107,6 +108,20 @@ public class Validations {
             return false;
         }
         return true;
+    }
+
+    public ResponseDTO winnerStatusValidation(Participant participant, String email, Lottery lottery) {
+        if (!participant.getEmail().equals(email)) {
+            return new ResponseDTO(Status.RESPONSE_FAIL, "Participant email and code doesn't match");
+        }
+        if (lottery.getWinnerId() == null) {
+            return new ResponseDTO(Status.STATUS_PENDING);
+        }
+        if (lottery.getWinnerId().equals(participant.getId()) && participant.getEmail().equals(email)) {
+            return new ResponseDTO(Status.STATUS_WIN);
+        } else {
+            return new ResponseDTO(Status.STATUS_LOSE);
+        }
     }
 
 

@@ -10,6 +10,8 @@ import lv.lottery.validation.Validations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 public class ParticipantControllerService {
@@ -25,11 +27,11 @@ public class ParticipantControllerService {
 
     public ResponseDTO createParticipant(ParticipantRegistrationDTO dto) {
         Lottery lottery = lotteryControllerService.getLotteryById(dto.getId());
-        if(lottery == null){
+        if (lottery == null) {
             return validations.noSuchLotteryResponseDTO(dto.getId());
         }
         ResponseDTO validationResponse = validations.participantValidation(dto);
-        if(validationResponse == null) {
+        if (validationResponse == null) {
             Participant participant = new Participant();
             participant.setLottery(lottery);
             participant.setEmail(dto.getEmail());
@@ -41,4 +43,15 @@ public class ParticipantControllerService {
         return validationResponse;
     }
 
+    public ResponseDTO getWinnerResponseDTO(Integer id, String email, String code) {
+        Lottery lottery = lotteryControllerService.getLotteryById(id);
+        if (lottery == null) {
+            return validations.noSuchLotteryResponseDTO(id);
+        }
+        Optional<Participant> participant = participantRepository.findByUniqueCode(code);
+        if (participant.isEmpty()) {
+            return new ResponseDTO(Status.RESPONSE_FAIL, "Wrong request data was passed");
+        }
+        return validations.winnerStatusValidation(participant.get(), email, lottery);
+    }
 }

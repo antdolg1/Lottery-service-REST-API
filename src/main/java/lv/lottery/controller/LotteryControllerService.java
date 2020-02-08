@@ -1,7 +1,6 @@
 package lv.lottery.controller;
 
 import lv.lottery.config.Status;
-import lv.lottery.controller.LotteryController;
 import lv.lottery.dto.*;
 import lv.lottery.model.Lottery;
 import lv.lottery.model.Participant;
@@ -16,10 +15,8 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
-
-import static lv.lottery.config.Status.LOTTERY_CLOSED;
-
 
 @Service
 public class LotteryControllerService {
@@ -66,7 +63,7 @@ public class LotteryControllerService {
         Lottery lotteryToModify = getLotteryById(dto.getId());
 
         if (lotteryToModify != null) {
-            lotteryToModify.setStatus(LOTTERY_CLOSED);
+            lotteryToModify.setStatus(Status.LOTTERY_CLOSED);
             logger.info("Lottery status successfully changed to CLOSED.");
             lotteryRepository.save(lotteryToModify);
             logger.info("Lottery successfully updated.");
@@ -94,6 +91,9 @@ public class LotteryControllerService {
                 return new ResponseDTO(Status.RESPONSE_FAIL, "Lottery is still open");
             }
             Integer winnerId = participantRepository.selectWinnerId(dto.getId());
+            if(winnerId == null){
+                return new ResponseDTO(Status.RESPONSE_FAIL, "You have no participants on this lottery");
+            }
             logger.info("Winner successfully selected.");
             Optional<Participant> participant = participantRepository.findById(winnerId);
             Participant participantToModify = participant.get();
@@ -110,5 +110,24 @@ public class LotteryControllerService {
         }
         return validations.noSuchLotteryResponseDTO(dto.getId());
     }
+
+    public HashMap<Integer, ResponseDTO> getStatisticsResponse() {
+        List<Lottery> listOfAllLotteries = lotteryRepository.findAll();
+
+        HashMap<Integer, ResponseDTO> listOfAllLotteriesStats = new HashMap<>();
+        Integer i = 0;
+        for (Lottery lottery : listOfAllLotteries) {
+            i++;
+            ResponseDTO lotteryStats = new ResponseDTO();
+            lotteryStats.setId(lottery.getId());
+            lotteryStats.setTitle(lottery.getTitle());
+            lotteryStats.setStartDate(lottery.getStartDate());
+            lotteryStats.setEndDate(lottery.getEndDate());
+            lotteryStats.setParticipants(lottery.getParticipants().size());
+            listOfAllLotteriesStats.put(i, lotteryStats);
+        }
+        return listOfAllLotteriesStats;
+    }
+
 }
 
