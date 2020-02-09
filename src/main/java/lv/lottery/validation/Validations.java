@@ -91,8 +91,8 @@ public class Validations {
             return false;
         }
         if (!((email.length() < 10 && shortEmail.equals(code.substring(6, 8)))
-                || email.length() >= 10 && shortEmail.equals(code.substring(7, 8)))) {
-            logger.warn("7 & 8 digit should represent emails length");
+                || email.length() >= 10 && shortEmail.equals(code.substring(6, 8)))) {
+            logger.warn("7 & 8 digit should represent email's length");
             return false;
         }
         if (!(code.substring(8)).chars().allMatch(Character::isDigit)) {

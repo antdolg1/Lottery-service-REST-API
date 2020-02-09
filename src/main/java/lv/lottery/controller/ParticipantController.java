@@ -2,6 +2,7 @@ package lv.lottery.controller;
 
 import lv.lottery.dto.ParticipantRegistrationDTO;
 import lv.lottery.dto.ResponseDTO;
+import lv.lottery.service.ParticipantControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

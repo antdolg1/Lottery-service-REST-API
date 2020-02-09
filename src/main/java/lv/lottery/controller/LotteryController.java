@@ -1,6 +1,7 @@
 package lv.lottery.controller;
 
 import lv.lottery.dto.*;
+import lv.lottery.service.LotteryControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

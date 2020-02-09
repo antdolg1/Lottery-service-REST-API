@@ -1,4 +1,4 @@
-package lv.lottery.controller;
+package lv.lottery.service;
 
 import lv.lottery.config.Status;
 import lv.lottery.dto.ParticipantRegistrationDTO;
@@ -29,6 +29,12 @@ public class ParticipantControllerService {
         Lottery lottery = lotteryControllerService.getLotteryById(dto.getId());
         if (lottery == null) {
             return validations.noSuchLotteryResponseDTO(dto.getId());
+        }
+        if (lottery.getStatus().equals(Status.LOTTERY_CLOSED)){
+            return new ResponseDTO(Status.RESPONSE_FAIL, "Lottery is already closed");
+        }
+        if (lottery.getParticipants().size() == lottery.getLimit()){
+            return new ResponseDTO(Status.RESPONSE_FAIL, "Lottery is already full");
         }
         ResponseDTO validationResponse = validations.participantValidation(dto);
         if (validationResponse == null) {

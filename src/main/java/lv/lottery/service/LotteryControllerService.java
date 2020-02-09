@@ -1,6 +1,7 @@
-package lv.lottery.controller;
+package lv.lottery.service;
 
 import lv.lottery.config.Status;
+import lv.lottery.controller.LotteryController;
 import lv.lottery.dto.*;
 import lv.lottery.model.Lottery;
 import lv.lottery.model.Participant;
@@ -32,6 +33,8 @@ public class LotteryControllerService {
 
     Logger logger = LoggerFactory.getLogger(LotteryController.class);
 
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+
     public ResponseDTO saveLottery(LotteryRegistrationDTO dto) {
         ResponseDTO validationResponse = validations.lotteryRegistrationValidation(dto);
         if (validationResponse == null) {
@@ -45,8 +48,6 @@ public class LotteryControllerService {
 
     public Lottery createLottery(LotteryRegistrationDTO dto) {
         Lottery lottery = new Lottery();
-        String pattern = "dd.MM.yyyy HH:mm";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String startDate = simpleDateFormat.format(new Date());
         lottery.setStartDate(startDate);
         logger.info("Lottery Start date successfully set");
@@ -92,14 +93,12 @@ public class LotteryControllerService {
             }
             Integer winnerId = participantRepository.selectWinnerId(dto.getId());
             if(winnerId == null){
-                return new ResponseDTO(Status.RESPONSE_FAIL, "You have no participants on this lottery");
+                return new ResponseDTO(Status.RESPONSE_FAIL, "Cannot select winner, because you have no participants in this lottery");
             }
             logger.info("Winner successfully selected.");
             Optional<Participant> participant = participantRepository.findById(winnerId);
             Participant participantToModify = participant.get();
             lotteryToModify.setWinnerId(winnerId);
-            String pattern = "dd.MM.yyyy HH:mm";
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             String endDate = simpleDateFormat.format(new Date());
             lotteryToModify.setEndDate(endDate);
             logger.info("Lottery End date successfully set");
