@@ -23,15 +23,22 @@ Entrypoints:
 Base url - http://localhost:8080
 
 
+Security:
+
+login: admin
+
+password: adminpass
+
+
 Lottery:
 
-/start-registration -> POST start new lottery
+/start-registration -> POST start new lottery (only admin)
 
-/stop-registration -> POST stop lottery
+/stop-registration -> POST stop lottery (only admin)
 
-/choose-winner -> POST choose winner for the lottery
+/choose-winner -> POST choose winner for the lottery (only admin)
 
-/stats -> GET statistics on all lotteries
+/stats -> GET statistics on all lotteries (only admin)
 
 
 Participant:
