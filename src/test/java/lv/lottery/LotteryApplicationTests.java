@@ -10,4 +10,5 @@ class LotteryApplicationTests {
 	void contextLoads() {
 	}
 
+
 }
