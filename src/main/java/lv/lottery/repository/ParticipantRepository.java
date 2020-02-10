@@ -21,5 +21,7 @@ public interface ParticipantRepository extends JpaRepository<Participant, Intege
     @Query(nativeQuery = true, value = "SELECT DISTINCT ON (unique_code)  unique_code FROM participants")
     List<String> getUniqueCodes();
 
+    void deleteById(Integer id);
+
 }
 

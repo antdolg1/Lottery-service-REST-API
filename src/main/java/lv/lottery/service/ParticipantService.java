@@ -12,4 +12,6 @@ public interface ParticipantService {
     Optional<Participant> findByUniqueCode(String uniqueCode);
 
     List<String> getUniqueCodes();
+
+    void deleteById(Integer id);
 }

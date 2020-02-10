@@ -22,8 +22,11 @@ public class ParticipantServiceImpl {
         return participantRepository.findByUniqueCode(uniqueCode);
     }
 
-    List<String> getUniqueCodes(){
+    List<String> getUniqueCodes() {
         return participantRepository.getUniqueCodes();
     }
 
+    void deleteById(Integer id) {
+        participantRepository.deleteById(id);
+    }
 }

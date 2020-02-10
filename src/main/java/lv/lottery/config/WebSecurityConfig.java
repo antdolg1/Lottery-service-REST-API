@@ -24,11 +24,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/register", "/status").permitAll()
-                .antMatchers(HttpMethod.GET, "/stats").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/start-registration", "/stop-registration", "/choose-winner").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.GET, "/register", "/status", "/login").permitAll()
+                    .antMatchers(HttpMethod.GET, "/stats").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.DELETE, "/delete-participant/{id}", "/delete-lottery/{id}").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.POST, "/start-registration", "/stop-registration", "/choose-winner").hasRole("ADMIN")
                 .and()
-                .csrf().disable()
-                .formLogin().disable();
+                .csrf()
+                    .disable()
+                .formLogin()
+                    .disable();
     }
 }
