@@ -50,7 +50,7 @@ public class LotteryController {
     @GetMapping("/get-lottery/{title}")
     public Lottery getLotteryByTitle(@PathVariable String title) {
         Optional<Lottery> lottery = lotteryRepository.getLotteryByTitle(title);
-        if (!lottery.isPresent())
+        if (lottery.isEmpty())
             throw new ResourceNotFoundException("Title: " + title);
         return lottery.get();
     }

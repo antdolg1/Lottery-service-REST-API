@@ -50,7 +50,10 @@ Participant:
 
 Test classes:
 
-Pending...
+LoginControllerTest
+LotteryApplicationTests
+
+Overall tests coverage >70%
 
 
 Running app:

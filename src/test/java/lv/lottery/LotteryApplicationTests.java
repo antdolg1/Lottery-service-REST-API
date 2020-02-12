@@ -5,7 +5,6 @@ import lv.lottery.config.Status;
 import lv.lottery.controller.LotteryController;
 import lv.lottery.model.Lottery;
 import org.json.JSONObject;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -46,12 +45,7 @@ public class LotteryApplicationTests {
     @WithMockUser(username = "admin", password = "adminpass", roles = "ADMIN")
     public void lotteryApplicationTest() throws Exception {
         String title = "Test_lottery";
-        createLottery(title)
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.status").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.status").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.status").value("OK"));
+        createLottery(title);
         ResultActions lottery = getLotteryByTitle(title);
         String lotteryJsonString = lottery.andReturn().getResponse().getContentAsString();
         JSONObject lotteryJson = new JSONObject(lotteryJsonString);
@@ -76,6 +70,7 @@ public class LotteryApplicationTests {
         JSONObject participantJson = new JSONObject(participantJsonString);
         String participantEmail = participantJson.getString("email");
         int participantId = participantJson.getInt("id");
+
         ResultActions participantResult = getParticipantResult(lotteryId, participantEmail, uniqueCode);
         String jsonParticipantResult = participantResult.andReturn().getResponse().getContentAsString();
         JSONObject participantWinnerCode = new JSONObject(jsonParticipantResult);
@@ -164,7 +159,12 @@ public class LotteryApplicationTests {
                 .post("/start-registration")
                 .content(asJsonString(new Lottery(100, Status.LOTTERY_OPEN, title, startDate, null, null, null)))
                 .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON));
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.status").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.status").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.status").value("OK"));
     }
 
     public ResultActions getLotteryByTitle(String title) throws Exception {
