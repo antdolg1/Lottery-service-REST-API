@@ -60,4 +60,8 @@ public class ParticipantControllerService {
         }
         return validations.winnerStatusValidation(participant.get(), email, lottery);
     }
+
+    public Optional<Participant> findParticipantByUniqueCode(String uniqueCode){
+        return participantRepository.findByUniqueCode(uniqueCode);
+    }
 }

@@ -2,12 +2,15 @@ package lv.lottery.controller;
 
 import lv.lottery.dto.ParticipantRegistrationDTO;
 import lv.lottery.dto.ResponseDTO;
+import lv.lottery.model.Participant;
 import lv.lottery.repository.ParticipantRepository;
 import lv.lottery.service.ParticipantControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.awt.desktop.ScreenSleepEvent;
+import java.util.Optional;
 
 @RestController
 public class ParticipantController {
@@ -28,6 +31,11 @@ public class ParticipantController {
                                                   @RequestParam String email,
                                                   @RequestParam String code) {
     return participantControllerService.getWinnerResponseDTO(id, email, code);
+    }
+
+    @GetMapping(value = "/get/{uniqueCode}")
+    public Optional<Participant> getParticipantByUniqueCode(@PathVariable String uniqueCode) {
+        return participantControllerService.findParticipantByUniqueCode(uniqueCode);
     }
 
     @DeleteMapping(value = "/delete-participant/{id}")
