@@ -14,7 +14,10 @@ public interface LotteryRepository extends JpaRepository<Lottery, Integer> {
     List<String> getUniqueTitles();
 
 
-   void deleteById(Integer id);
+    void deleteById(Integer id);
 
     void deleteByTitle(String title);
+
+    Optional<Lottery> getLotteryByTitle(String title);
+
 }

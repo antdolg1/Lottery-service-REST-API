@@ -25,4 +25,8 @@ public class LotteryServiceImpl {
     void deleteByTitle(String title) {
       lotteryRepository.deleteByTitle(title);
     }
+
+    Optional<Lottery> getLotteryByTitle(String title) {
+        return lotteryRepository.getLotteryByTitle(title);
+    }
 }

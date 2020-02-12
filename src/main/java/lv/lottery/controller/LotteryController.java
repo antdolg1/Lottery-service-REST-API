@@ -1,6 +1,7 @@
 package lv.lottery.controller;
 
 import lv.lottery.dto.*;
+import lv.lottery.exception.ResourceNotFoundException;
 import lv.lottery.model.Lottery;
 import lv.lottery.repository.LotteryRepository;
 import lv.lottery.service.LotteryControllerService;
@@ -44,5 +45,13 @@ public class LotteryController {
     @Transactional
     public void deleteByTitle(@PathVariable String title){
         lotteryRepository.deleteByTitle(title);
+    }
+
+    @GetMapping("/get-lottery/{title}")
+    public Lottery getLotteryByTitle(@PathVariable String title) {
+        Optional<Lottery> lottery = lotteryRepository.getLotteryByTitle(title);
+        if (!lottery.isPresent())
+            throw new ResourceNotFoundException("Title: " + title);
+        return lottery.get();
     }
 }

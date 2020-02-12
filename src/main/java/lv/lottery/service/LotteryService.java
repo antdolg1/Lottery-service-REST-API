@@ -12,4 +12,6 @@ public interface LotteryService {
     void deleteById(Integer id);
 
     void deleteByTitle(String title);
+
+    Optional<Lottery> getLotteryByTitle(String title);
 }
