@@ -175,7 +175,7 @@ public class LotteryApplicationTests {
 
     public ResultActions getParticipantByUniqueCode(String uniqueCode) throws Exception {
         return mockMvc.perform(MockMvcRequestBuilders
-                .get("/get/" + uniqueCode)
+                .get("/get-participant/" + uniqueCode)
                 .accept(MediaType.APPLICATION_JSON));
     }
 

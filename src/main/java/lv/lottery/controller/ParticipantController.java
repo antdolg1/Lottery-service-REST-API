@@ -33,7 +33,7 @@ public class ParticipantController {
     return participantControllerService.getWinnerResponseDTO(id, email, code);
     }
 
-    @GetMapping(value = "/get/{uniqueCode}")
+    @GetMapping(value = "/get-participant/{uniqueCode}")
     public Optional<Participant> getParticipantByUniqueCode(@PathVariable String uniqueCode) {
         return participantControllerService.findParticipantByUniqueCode(uniqueCode);
     }
