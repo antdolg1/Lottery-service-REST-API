@@ -50,7 +50,16 @@ Participant:
 
 /register -> POST register new participant
 
-/status -> GET check participant status in the lotery
+/status -> GET check participant status in the lottery
+
+______________________________________________________
+/delete-lottery -> added for test purposes
+
+/get-lottery -> added for test purposes
+
+/delete-participant -> added for test purposes
+
+/get-participant -> added for test purposes
 
 
 Test classes:
