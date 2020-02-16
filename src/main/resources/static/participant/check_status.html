@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel=icon href="/img/icon.ico">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <title>Lottery/check status</title>
+</head>
+<body>
+<header>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">LOTTERY</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ml-auto">
+                    <a class="nav-item nav-link" href="register_participant.html">Register for lottery</a>
+                    <a class="nav-item nav-link active" href="check_status.html">Check your status</a>
+                </div>
+            </div>
+        </nav>
+
+        <form>
+            <div class="form-group">
+                <label for="lotteryId">Lottery id</label>
+                <input type="number" class="form-control" id="lotteryId" placeholder="Enter lottery id">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="uniqueCode">Unique code</label>
+                <input type="text" class="form-control" id="uniqueCode" placeholder="Enter your unique code">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="checkStatus(event)">Check your status</button>
+            <div id="errors"></div>
+        </form>
+
+    </div>
+</header>
+
+
+<script src="../js/jquery-3.4.1.js"></script>
+<script src="../js/bootstrap.js"></script>
+<script src="../js/popper.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>
