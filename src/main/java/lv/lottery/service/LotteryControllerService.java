@@ -120,6 +120,7 @@ public class LotteryControllerService {
             ResponseDTO lotteryStats = new ResponseDTO();
             lotteryStats.setId(lottery.getId());
             lotteryStats.setTitle(lottery.getTitle());
+            lotteryStats.setStatus(lottery.getStatus());
             lotteryStats.setStartDate(lottery.getStartDate());
             lotteryStats.setEndDate(lottery.getEndDate());
             lotteryStats.setParticipants(lottery.getParticipants().size());
