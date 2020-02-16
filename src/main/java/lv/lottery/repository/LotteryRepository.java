@@ -1,7 +1,6 @@
 package lv.lottery.repository;
 
 import lv.lottery.model.Lottery;
-import lv.lottery.model.Participant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
