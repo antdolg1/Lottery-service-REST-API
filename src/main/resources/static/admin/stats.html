@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel=icon href="/img/icon.ico">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <title>Lottery/statistics</title>
+</head>
+<body>
+<header>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">LOTTERY</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ml-auto">
+                    <a class="nav-item nav-link" href="start_lottery.html">Start new lottery</a>
+                    <a class="nav-item nav-link active" href="stats.html">Stats</a>
+                    <form class="form-inline" action="/logout">
+                        <button class="btn btn-sm btn-outline-secondary" type="submit">Log out</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        <table id="statisticsData">
+            <tr>
+                <th>Id</th>
+                <th>Status</th>
+                <th>Title</th>
+                <th>Start date</th>
+                <th>End date</th>
+                <th>Participants</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </table>
+    </div>
+</header>
+
+<script src="../js/jquery-3.4.1.js"></script>
+<script src="../js/bootstrap.js"></script>
+<script src="../js/popper.min.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>
