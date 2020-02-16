@@ -1,9 +1,14 @@
 # lottery
 Final project for HelloIT/Pearl Java bootcamp
-Introduction
 
-Lottery application. Works as REST API service with JSON as response.
+Introduction:
+
+Lottery application. Works as REST API service with JSON as request/response with basic GUI.
+Swagger UI added for convenience (http://localhost:8080/swagger-ui.html#/).
+
 Technologies used: Java (Spring Boot), Maven, PostgreSQL as database
+
+DB backup file location: /resources/db/db_anton.sql
 
 App structure
 
@@ -61,5 +66,7 @@ Running app:
 Start app: mvn spring-boot:run
 
 Go to http://localhost:8080
+
+
 
 
