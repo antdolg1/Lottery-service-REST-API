@@ -117,7 +117,7 @@ $.ajax({
 });
 
 function drawTable(data) {
-    for (var element in data) {
+    for (let element in data) {
         drawRow(data[element]);
     }
 }
