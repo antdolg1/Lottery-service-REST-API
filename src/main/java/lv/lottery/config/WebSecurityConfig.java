@@ -1,37 +1,37 @@
 package lv.lottery.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+@EnableWebSecurity
 @Configuration
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.inMemoryAuthentication()
-                .withUser("admin").password("{noop}adminpass").roles("ADMIN");
-
-    }
+@EnableSwagger2
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                .httpBasic()
-                .and()
+                .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers(HttpMethod.GET, "/register", "/status", "/login").permitAll()
-                    .antMatchers(HttpMethod.GET, "/stats", "/get-lottery/{title}").hasRole("ADMIN")
-                    .antMatchers(HttpMethod.DELETE, "/delete-participant/{id}", "/delete-lottery/{id}").hasRole("ADMIN")
-                    .antMatchers(HttpMethod.POST, "/start-registration", "/stop-registration", "/choose-winner").hasRole("ADMIN")
+                .antMatchers("/", "/index.html").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/start-registration", "/stop-registration", "/choose-winner", "/stats").authenticated()
                 .and()
-                .csrf()
-                    .disable()
                 .formLogin()
-                    .disable();
+                .loginPage("/login").permitAll()
+                .and()
+                .logout()
+                .logoutSuccessUrl("/").permitAll();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().withUser("admin").password("{noop}adminpass").roles("ADMIN");
     }
 }
