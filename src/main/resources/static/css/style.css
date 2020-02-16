@@ -1,0 +1,13 @@
+header .nav-item{
+    text-transform: uppercase;
+    margin-left: 10px;
+}
+table {
+    border: 2px solid #666;
+    width: 100%;
+}
+th {
+    background: #f8f8f8;
+    font-weight: bold;
+    padding: 5px;
+}
